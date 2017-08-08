@@ -72,6 +72,7 @@ $parms = LTI::signParameters($parms, $url, "POST", $key, $secret,
 // $debug = true;
 if ( $LAUNCH->user->instructor ) {
     $content = LTI::postLaunchHTML($parms, $url, $debug, "_pause" );
+    echo(__('Pausing to allow for Instructor configuration.')."\n");
     echo(__('Continue to')."\n");
     echo('<a href="#" onclick="document.'.$form_id.'.submit();return false">'.htmlentities($title).'</a>'."\n");
 } else {
