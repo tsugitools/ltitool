@@ -83,13 +83,6 @@ echo("<!-- Start of content -->\n");
 print($content);
 echo("<!-- End of content -->\n");
 
-?>
-
-<div class="tsugi_overlay" id="overlay" style="display:none">
-<img src="<?= $CFG->staticroot ?>/img/logos/apereo-logo-blue-spin.svg" id="spinn" width="100px" height="100px">
-</div>
-
-<?php
 /*
 echo("<pre>Global Tsugi Objects:\n\n");
 var_dump($USER);
@@ -102,10 +95,5 @@ echo($OUTPUT->safe_var_dump($_SESSION));
 */
 
 $OUTPUT->footerStart();
-?>
-<script>
-// showOverlay("#overlay", "#spinn");
-</script>
-<?php
 $OUTPUT->footerEnd();
 
