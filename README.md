@@ -6,3 +6,9 @@ LTI Proxy
 
 This is a component of the [Tsugi PHP Project](https://github.com/csev/tsugi).
 
+You can install this app into your Tsugin Instance using the Tsugi 
+Management and Adminstration console under "Manage Installed Modules".
+
+Or you can check it out into a `mod` folder where yout Tsugi is configured to search
+for apps.
+
