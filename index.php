@@ -70,7 +70,7 @@ $placementsecret = false;
 $sourcedid = false;
 $key_id = $LAUNCH->ltiParameter('key_id');
 if ( $grade && $key_id && $CONTEXT->id && $LINK->id && $RESULT->id ) {
-    $placementsecret = $LAUNCH->result->getPlacementSecret();
+    $placementsecret = $LAUNCH->link->getPlacementSecret();
     $outcome = $CFG->wwwroot."/api/poxresult";
     $sourcebase = $key_id . '::' . $CONTEXT->id . '::' . $LINK->id . '::' . $RESULT->id . '::';
     $plain = $sourcebase . $placementsecret;
