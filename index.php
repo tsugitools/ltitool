@@ -1,6 +1,7 @@
 <?php
 require_once "../config.php";
 
+use \Tsugi\Util\U;
 use \Tsugi\Util\LTI;
 use \Tsugi\Core\LTIX;
 use \Tsugi\Core\Settings;
@@ -23,6 +24,7 @@ $key = Settings::linkGet('key', '');
 $secret = Settings::linkGet('secret', '');
 $sendName = Settings::linkGet('sendName', '');
 $sendEmail = Settings::linkGet('sendEmail', '');
+$grade = Settings::linkGet('grade', '');
 $newWindow = Settings::linkGet('newWindow', '');
 $debug = Settings::linkGet('debug', '');
 $custom = Settings::linkGet('custom', '');
@@ -44,6 +46,7 @@ if ( $USER->instructor ) {
     SettingsForm::text('secret',__('Secret'));
     SettingsForm::checkbox('sendName',__('Send Student Names to Tool'));
     SettingsForm::checkbox('sendEmail',__('Send Student Email Addresses to Tool'));
+    SettingsForm::checkbox('grade',__('Allow the tool to send a grade'));
     SettingsForm::checkbox('newWindow',__('Open in New Window'));
     SettingsForm::checkbox('debug',__('Pause launch for debugging'));
     SettingsForm::textarea('custom',__('Custom parameters key=value on lines'));
@@ -63,6 +66,21 @@ $parms = $LAUNCH->newLaunch($sendName,$sendEmail);
 
 LTI::addCustom($parms, $custom);
 
+$placementsecret = false;
+$sourcedid = false;
+$key_id = $LAUNCH->ltiParameter('key_id');
+if ( $grade && $key_id && $CONTEXT->id && $LINK->id && $RESULT->id ) {
+    $placementsecret = $LAUNCH->result->getPlacementSecret();
+    $base = U::get_base_url($CFG->wwwroot);
+    $outcome = $base . U::get_rest_path() . '/poxresult.php';
+    $sourcebase = $key_id . '::' . $CONTEXT->id . '::' . $LINK->id . '::' . $RESULT->id . '::';
+    $plain = $sourcebase . $placementsecret;
+    $sig = U::lti_sha256($plain);
+    $sourcedid = $sourcebase . $sig;
+    $parms['lis_outcome_service_url'] = $outcome;
+    $parms["lis_result_sourcedid"] = $sourcedid;
+}
+
 $form_id = "tsugi_form_id_".bin2Hex(openssl_random_pseudo_bytes(4));
 $parms['ext_lti_form_id'] = $form_id;
 
@@ -72,7 +90,7 @@ $parms = LTI::signParameters($parms, $url, "POST", $key, $secret,
 // $debug = true;
 if ( $LAUNCH->user->instructor ) {
     $content = LTI::postLaunchHTML($parms, $url, $debug, "_pause" );
-    echo(__('Pausing to allow for Instructor configuration.')."\n");
+    echo(__('Pausing to allow for Instructor configuration.')."</br>\n");
     echo(__('Continue to')."\n");
     echo('<a href="#" onclick="document.'.$form_id.'.submit();return false">'.htmlentities($title).'</a>'."\n");
 } else {
