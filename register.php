@@ -2,9 +2,9 @@
 
 $REGISTER_LTI2 = array(
 "name" => "External Tool",
-"FontAwesome" => "fa-world",
+"FontAwesome" => "fa-globe",
 "short_name" => "LTI",
-"description" => "Learning Tools Interoperability",
+"description" => "Launch another Learning Tools Interoperability tool.",
 "messages" => array("launch")
 );
 
