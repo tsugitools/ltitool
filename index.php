@@ -33,11 +33,18 @@ $custom = Settings::linkGet('custom', '');
 $OUTPUT->header();
 $OUTPUT->bodyStart();
 $OUTPUT->topNav();
+echo('<div class="container">');
+
 $OUTPUT->flashMessages();
 
-if ( $USER->instructor ) {
+if ( $LAUNCH->user && $LAUNCH->user->instructor ) {
+    echo "<p style='float:right;'>";
+    if ( $CFG->launchactivity ) {
+        echo('<a href="analytics" class="btn btn-default">Launches</a> ');
+    }
+    SettingsForm::button(false);
+    echo("</p>");
     $OUTPUT->welcomeUserCourse();
-    SettingsForm::button(true);
     SettingsForm::start();
     echo("<p>Configure the LTI Tool<p>\n");
     SettingsForm::text('title',__('Title'));
@@ -110,6 +117,8 @@ echo("\n<hr/>\n");
 echo("Session data (low level):\n");
 echo($OUTPUT->safe_var_dump($_SESSION));
 */
+
+echo("\n</div>\n");
 
 $OUTPUT->footerStart();
 $OUTPUT->footerEnd();
