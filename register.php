@@ -1,10 +1,11 @@
 <?php
 
 $REGISTER_LTI2 = array(
-"name" => "External Tool",
+"name" => "External Tool (LTI)",
 "FontAwesome" => "fa-globe",
 "short_name" => "LTI Proxy",
-"description" => "Launch another Learning Tools Interoperability (LTI) tool.  Supports grade-passback and in-tool analytics.",
+"description" => "Launch another Learning Tools Interoperability (LTI) tool.
+Supports grade-passback and in-tool analytics.",
 "messages" => array("launch"),
     "privacy_level" => "public",  // anonymous, name_only, public
     "license" => "Apache",
@@ -14,7 +15,7 @@ $REGISTER_LTI2 = array(
     "analytics" => array(
         "internal"
     ),
-    "source_url" => "https://github.com/tsugitools/lti_tool",
+    "source_url" => "https://github.com/tsugitools/ltitool",
     "placements" => array(
         "course_navigation", "editor_button", "homework_submission",
         "link_selection"
