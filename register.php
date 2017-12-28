@@ -6,7 +6,7 @@ $REGISTER_LTI2 = array(
 "short_name" => "LTI Proxy",
 "description" => "Launch another Learning Tools Interoperability (LTI) tool.
 Supports grade-passback and in-tool analytics.",
-"messages" => array("launch"),
+"messages" => array("launch", "launch_grade"),
     "privacy_level" => "public",  // anonymous, name_only, public
     "license" => "Apache",
     "languages" => array(
