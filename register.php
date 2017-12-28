@@ -16,9 +16,8 @@ Supports grade-passback and in-tool analytics.",
         "internal"
     ),
     "source_url" => "https://github.com/tsugitools/ltitool",
+    // For now Tsugi tools delegate this to /lti/store
     "placements" => array(
-        "course_navigation", "editor_button", "homework_submission",
-        "link_selection"
         /*
         "course_navigation", "homework_submission",
         "course_home_submission", "editor_button",
