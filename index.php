@@ -29,22 +29,23 @@ $newWindow = Settings::linkGet('newWindow', '');
 $debug = Settings::linkGet('debug', '');
 $custom = Settings::linkGet('custom', '');
 
+$menu = false;
+if ( $LAUNCH->user && $LAUNCH->user->instructor ) {
+    $menu = new \Tsugi\UI\MenuSet();
+    if ( $CFG->launchactivity ) {
+        $menu->addRight(__('Launches'), 'analytics');
+    }
+    $menu->addRight(__('Settings'), '#', /* push */ false, SettingsForm::attr());
+}
+
+
 // Start of the output
 $OUTPUT->header();
 $OUTPUT->bodyStart();
-$OUTPUT->topNav();
-echo('<div class="container">');
-
+$OUTPUT->topNav($menu);
 $OUTPUT->flashMessages();
 
 if ( $LAUNCH->user && $LAUNCH->user->instructor ) {
-    echo "<p style='float:right;'>";
-    if ( $CFG->launchactivity ) {
-        echo('<a href="analytics" class="btn btn-default">Launches</a> ');
-    }
-    SettingsForm::button(false);
-    echo("</p>");
-    $OUTPUT->welcomeUserCourse();
     SettingsForm::start();
     echo("<p>Configure the LTI Tool<p>\n");
     SettingsForm::text('title',__('Title'));
@@ -62,7 +63,7 @@ if ( $LAUNCH->user && $LAUNCH->user->instructor ) {
 }
 
 if ( strlen($url) < 1 || strlen($key) < 1 || strlen($secret) < 1 ) {
-    echo('<br clear="all"><p>'.__("This LTI tool is not yet configured.").'</p>'."\n");
+    echo('<p>'.__("This LTI tool is not yet configured.").'</p>'."\n");
     $OUTPUT->footer();
     return;
 }
@@ -117,8 +118,6 @@ echo("\n<hr/>\n");
 echo("Session data (low level):\n");
 echo($OUTPUT->safe_var_dump($_SESSION));
 */
-
-echo("\n</div>\n");
 
 $OUTPUT->footerStart();
 $OUTPUT->footerEnd();
