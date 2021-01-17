@@ -91,8 +91,9 @@ if ( $grade && $key_id && $CONTEXT->id && $LINK->id && $RESULT->id ) {
 $form_id = "tsugi_form_id_".bin2Hex(openssl_random_pseudo_bytes(4));
 $parms['ext_lti_form_id'] = $form_id;
 
+$product_instance_guid = md5($CFG->wwwroot);
 $parms = LTI::signParameters($parms, $url, "POST", $key, $secret,
-     __("Finish Launch"), $CFG->product_instance_guid, $CFG->servicename);
+     __("Finish Launch"), $product_instance_guid, $CFG->servicename);
 
 // $debug = true;
 if ( $LAUNCH->user->instructor ) {
