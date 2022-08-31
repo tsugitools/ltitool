@@ -24,6 +24,7 @@ $key = Settings::linkGet('key', '');
 $secret = LTIX::decrypt_secret(Settings::linkGet('secret', ''));
 $sendName = Settings::linkGet('sendName', '');
 $sendEmail = Settings::linkGet('sendEmail', '');
+$allowRoster = Settings::linkGet('allowRoster', '');
 $grade = Settings::linkGet('grade', '');
 $newWindow = Settings::linkGet('newWindow', '');
 $debug = Settings::linkGet('debug', '');
@@ -55,6 +56,7 @@ if ( $LAUNCH->user && $LAUNCH->user->instructor ) {
     SettingsForm::checkbox('sendName',__('Send Student Names to Tool'));
     SettingsForm::checkbox('sendEmail',__('Send Student Email Addresses to Tool'));
     SettingsForm::checkbox('grade',__('Allow the tool to send a grade'));
+    SettingsForm::checkbox('allowRoster',__('Provide Roster (ext_mmeberships) to Tool'));
     SettingsForm::checkbox('newWindow',__('Open in New Window'));
     SettingsForm::checkbox('debug',__('Pause launch for debugging'));
     SettingsForm::textarea('custom',__('Custom parameters key=value on lines'));
@@ -85,7 +87,20 @@ if ( $grade && $key_id && $CONTEXT->id && $LINK->id && $RESULT->id ) {
     $sig = U::lti_sha256($plain);
     $sourcedid = $sourcebase . $sig;
     $parms['lis_outcome_service_url'] = $outcome;
-    $parms["lis_result_sourcedid"] = $sourcedid;
+    $parms['lis_result_sourcedid'] = $sourcedid;
+}
+
+// ext_ims_lis_memberships_url=http://localhost:8080/imsblis/service/
+// ext_ims_lis_memberships_id=7d65a1b397c0d4b1e86b6
+if ( $allowRoster && $key_id && $CONTEXT->id && $LINK->id && $RESULT->id ) {
+    $roster = $CFG->wwwroot."/api/ltiextroster";
+    $sourcebase = $key_id . '::' . $CONTEXT->id . '::' . $LINK->id . '::';
+    $plain = $sourcebase . $placementsecret;
+    $sig = U::lti_sha256($plain);
+    $memberships = $sourcebase . $sig;
+    $ext_ims_lis_memberships_id = $sourcebase . $sig;
+    $parms['ext_ims_lis_memberships_url'] = $roster;
+    $parms['ext_ims_lis_memberships_id'] = $ext_ims_lis_memberships_id;
 }
 
 $form_id = "tsugi_form_id_".bin2Hex(openssl_random_pseudo_bytes(4));
