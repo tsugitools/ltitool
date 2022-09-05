@@ -56,7 +56,7 @@ if ( $LAUNCH->user && $LAUNCH->user->instructor ) {
     SettingsForm::checkbox('sendName',__('Send Student Names to Tool'));
     SettingsForm::checkbox('sendEmail',__('Send Student Email Addresses to Tool'));
     SettingsForm::checkbox('grade',__('Allow the tool to send a grade'));
-    SettingsForm::checkbox('allowRoster',__('Provide Roster (ext_mmeberships) to Tool'));
+    SettingsForm::checkbox('allowRoster',__('Provide Roster (ext_memberships) to Tool'));
     SettingsForm::checkbox('newWindow',__('Open in New Window'));
     SettingsForm::checkbox('debug',__('Pause launch for debugging'));
     SettingsForm::textarea('custom',__('Custom parameters key=value on lines'));
